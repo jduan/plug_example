@@ -1,18 +1,13 @@
 defmodule PlugExample do
-  @moduledoc """
-  Documentation for PlugExample.
-  """
+  use Application
+  require Logger
 
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> PlugExample.hello
-      :world
-
-  """
-  def hello do
-    :world
+  def start(_type, _args) do
+    children = [
+      Plug.Adapters.Cowboy.child_spec(:http, Example.HelloWorldPlug,
+                                      [], port: 8080)
+    ]
+    Logger.info "Started application"
+    Supervisor.start_link(children, strategy: :one_for_one)
   end
 end
