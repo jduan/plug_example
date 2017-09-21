@@ -4,7 +4,7 @@ defmodule PlugExample do
 
   def start(_type, _args) do
     children = [
-      Plug.Adapters.Cowboy.child_spec(:http, Example.HelloWorldPlug,
+      Plug.Adapters.Cowboy.child_spec(:http, Example.Router,
                                       [], port: 8080)
     ]
     Logger.info "Started application"
