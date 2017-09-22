@@ -3,9 +3,10 @@ defmodule PlugExample do
   require Logger
 
   def start(_type, _args) do
+    port = Application.get_env(:example, :cowboy_part, 8080)
     children = [
       Plug.Adapters.Cowboy.child_spec(:http, Example.Router,
-                                      [], port: 8080)
+                                      [], port: port)
     ]
     Logger.info "Started application"
     Supervisor.start_link(children, strategy: :one_for_one)
